@@ -1,0 +1,8 @@
+Flask==2.0.3
+Flask_Mail==0.9.1
+Flask_MySQLdb==1.0.1
+numpy==1.23.3
+tensorflow==2.11.0
+tensorflow_intel==2.11.0
+scikit-learn==1.2.1
+scipy==1.10.0

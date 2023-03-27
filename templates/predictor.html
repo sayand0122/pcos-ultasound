@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PCOS predection</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+      body {
+        font-family: "Open Sans", sans-serif;
+        color: #444444;
+        line-height: 1.8;
+      }
+      p {
+        font-size: 16px;
+      }
+      .margin {
+        margin-bottom: 25px;
+      }
+      .bg-1 {
+        background-color: #1977cc; /* Green */
+        color: #ffffff;
+      }
+      .bg-2 {
+        background-color: #474e5d; /* Dark Blue */
+        color: #ffffff;
+      }
+      .bg-3 {
+        background-color: #ffffff; /* White */
+        color: #555555;
+      }
+      .bg-4 {
+        background-color: #2f2f2f; /* Black Gray */
+        color: #fff;
+      }
+      .container-fluid {
+        padding-top: 70px;
+        padding-bottom: 70px;
+      }
+      .navbar {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border: 0;
+        border-radius: 0;
+        margin-bottom: 0;
+        font-size: 12px;
+        letter-spacing: 5px;
+      }
+      .navbar-nav li a:hover {
+        color: #bc1abc !important;
+      }
+      #container-v {
+        overflow-y: hidden;
+        width: 100% !important;
+      }
+      .child_con {
+        height: 500px;
+        float: left;
+        margin: 1em;
+      }
+      input[type="text"] {
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: none;
+        background-color: white;
+        color: black;
+      }
+      .block {
+        display: block;
+        width: 10%;
+        border: none;
+        background-color: #04aa6d;
+        color: white;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+      }
+
+      label {
+        width: 230px;
+        display: inline-block;
+        text-align: left;
+      }
+      .prediction_text {
+        font-family: "Open Sans", sans-serif;
+        color: #444444;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header id="header" class="fixed-top">
+      <div class="container d-flex align-items-center">
+        <h1 class="logo me-auto"><a href="index.html">PCOS-Predictor</a></h1>
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+          <ul>
+            <li>
+              <a href="/" class="appointment-btn scrollto"
+                ><span class="d-none d-md-inline">Home</span></a
+              >
+            </li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+        <!-- .navbar -->
+
+        <a href="/logout" class="appointment-btn scrollto"
+          ><span class="d-none d-md-inline">Logout</span></a
+        >
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- First Container -->
+    <div class="login" style="height: 850px; overflow-y: scroll">
+      <div id="practice" class="container-fluid bg-1 text-center">
+        <h1 class="margin">Polycystic ovary syndrome (PCOS)</h1>
+        <img
+          src="{{url_for('static', filename='img/images.png')}}"
+          class="img-responsive img-circle margin"
+          style="display: inline"
+          alt="Bird"
+          width="200"
+          height="200"
+        />
+
+        <!--##########################################################################################################-->
+
+        <h1>PCOS Predictor</h1>
+
+        <!-- Main Input For Receiving Query to our ML -->
+        <form action="{{ url_for('predict')}}" method="post">
+          <!--##########################################################################################################-->
+
+          <!--REGEX FOR ERROR HANDLING-->
+
+          <label for="fname">Age :</label>
+          <input
+            type="text"
+            id="fname"
+            name="Age (yrs)"
+            placeholder="Age (yrs)"
+            pattern="^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)$"
+            title="Please enter a valid number between 0 and 200."
+            required="required"
+          /><br />
+          <label for="name">BMI :</label>
+          <input
+            type="text"
+            id="name"
+            name="BMI"
+            placeholder="BMI"
+            pattern="^(0?[1-9]|[1-9][0-9]|[1][1-9][1-9]|200)$"
+            title="Please enter a valid number between 0 and 200."
+            required="required"
+          /><br />
+
+          <!--##########################################################################################################-->
+          <label for="cycle">Is your cycle regular ? :</label>
+          <input
+            type="text"
+            id="cycle"
+            name="Cycle (R/I)"
+            placeholder="Cycle (regular/irregular)"
+            required="required"
+          /><br />
+
+          <label for="gain">Weight Gain :</label>
+          <input
+            type="text"
+            id="gain"
+            name="Weight Gain (Y/N)"
+            placeholder="Weight Gain (yes/no)"
+            required="required"
+          /><br />
+          <label for="hair">Hair Growth :</label>
+          <input
+            type="text"
+            id="hair"
+            name="Hair Growth (Y/N)"
+            placeholder="Hair Growth (yes/no)"
+            required="required"
+          /><br />
+
+          <label for="skin">Skin Darkening :</label>
+          <input
+            type="text"
+            id="skin"
+            name="Skin Darkening (Y/N)"
+            placeholder="Skin Darkening (yes/no)"
+            required="required"
+          /><br />
+
+          <label for="hair">Hair Loss :</label>
+          <input
+            type="text"
+            id="hair"
+            name="Hair Loss (Y/N)"
+            placeholder="Hair Loss (yes/no)"
+            required="required"
+          /><br />
+
+          <label for="pi">Pimples :</label>
+          <input
+            type="text"
+            id="pi"
+            name="Pimples (Y/N)"
+            placeholder="Pimples (yes/no)"
+            required="required"
+          /><br />
+
+          <label for="fa">Fast Food :</label>
+          <input
+            type="text"
+            id="fa"
+            name="Fast food (Y/N)"
+            placeholder="Fast food (yes/no)"
+            required="required"
+          /><br />
+
+          <label for="re">Reguar Exercise :</label>
+          <input
+            type="text"
+            id="re"
+            name="Regular Exercise (Y/N)"
+            placeholder="Regular Exercise (yes/no)"
+            required="required"
+          />
+
+          <button type="submit" class="block">Predict</button>
+        </form>
+
+        <p></p>
+        {{ prediction_text }}
+      </div>
+    </div>
+  </body>
+</html>
